@@ -37,7 +37,7 @@ fun HomeScreen() {
         },
         bottomBar = {
             BottomBar(
-                onNewAdviceClick = { }
+                onNewAdviceClick = { homeViewModel.getRandomAdvice() }
             )
         },
         containerColor = MaterialTheme.colorScheme.background,
