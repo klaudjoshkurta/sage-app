@@ -1,5 +1,7 @@
 package com.klaudjoshkurta.sage.ui.home
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,13 +18,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.klaudjoshkurta.sage.R
+import com.klaudjoshkurta.sage.model.Advice
 import com.klaudjoshkurta.sage.ui.components.AdviceBox
 
 @Composable
@@ -30,6 +36,7 @@ fun HomeScreen() {
 
     val homeViewModel: HomeViewModel = viewModel()
     val homeUiState = homeViewModel.homeUiState
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -37,7 +44,15 @@ fun HomeScreen() {
         },
         bottomBar = {
             BottomBar(
-                onNewAdviceClick = { homeViewModel.getRandomAdvice() }
+                onNewAdviceClick = {
+                    homeViewModel.getRandomAdvice()
+                },
+                onShareClick = {
+                    shareAdvice(
+                        context = context,
+                        advice = (homeUiState as HomeUiState.Success).advice.slip.advice
+                    )
+                }
             )
         },
         containerColor = MaterialTheme.colorScheme.background,
@@ -88,7 +103,8 @@ fun TopBar(
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
-    onNewAdviceClick: () -> Unit
+    onNewAdviceClick: () -> Unit,
+    onShareClick: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 24.dp).navigationBarsPadding(),
@@ -104,7 +120,23 @@ fun BottomBar(
             painter = painterResource(R.drawable.ic_share),
             contentDescription = null,
             tint = Color.Black,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp).clickable { onShareClick() }
         )
     }
+}
+
+private fun shareAdvice(
+    context: Context,
+    advice: String
+) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, advice)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.share_advice)
+        )
+    )
 }
