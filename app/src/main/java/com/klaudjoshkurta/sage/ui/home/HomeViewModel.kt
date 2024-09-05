@@ -18,7 +18,7 @@ class HomeViewModel : ViewModel() {
         getRandomAdvice()
     }
 
-    private fun getRandomAdvice() {
+    fun getRandomAdvice() {
         viewModelScope.launch {
             homeUiState = HomeUiState.Loading
             homeUiState = try {
