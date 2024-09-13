@@ -40,7 +40,9 @@ fun AppNavigation(
         composable(
             route = Screen.Home.route
         ) {
-            HomeScreen()
+            HomeScreen(
+                sharedPreferences = sharedPreferences
+            )
         }
     }
 }
