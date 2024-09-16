@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -86,18 +88,8 @@ fun HomeScreen(
                             )
                         }
                     )
-                    is HomeUiState.Error -> {
-                        Text(
-                            text = "Error",
-                            color = Color.Black
-                        )
-                    }
-                    is HomeUiState.Loading -> {
-                        Text(
-                            text = "Loading",
-                            color = Color.Black
-                        )
-                    }
+                    is HomeUiState.Error -> LoadingState()
+                    is HomeUiState.Loading -> LoadingState()
                 }
             }
 
@@ -122,6 +114,13 @@ fun HomeScreen(
             }
         }
     }
+}
+
+@Composable
+fun LoadingState() {
+    CircularProgressIndicator(
+        modifier = Modifier.width(64.dp),
+    )
 }
 
 private fun shareAdvice(
