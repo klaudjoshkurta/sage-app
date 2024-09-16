@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Sage</string>
     <string name="share_advice">Share advice</string>
+    <string name="onboarding_title">Discover a New Perspective Every Day.</string>
+    <string name="onboarding_body">Receive a random piece of advice each day.</string>
+    <string name="get_started">Get Started</string>
 </resources>
