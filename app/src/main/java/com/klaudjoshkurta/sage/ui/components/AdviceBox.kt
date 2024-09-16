@@ -62,6 +62,16 @@ fun AdviceBox(
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_heart),
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+            IconButton(
                 onClick = onShareClick
             ) {
                 Icon(
